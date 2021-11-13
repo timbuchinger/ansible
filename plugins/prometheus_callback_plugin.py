@@ -33,7 +33,7 @@ class CallbackModule(CallbackBase):
 
     def v2_playbook_on_play_start(self, play):
         self.play = play
-        self.gateway_url = os.environ['GATEWAY_URL'] # localhost:9091
+        self.gateway_url = os.environ['GATEWAY_URL']  # localhost:9091
         self.registry = CollectorRegistry()
         self.play_start_time = datetime.now()
 
@@ -56,7 +56,7 @@ class CallbackModule(CallbackBase):
         play_end_time = datetime.now()
 
         elapsed_time = 0
-        diff = play_end_time - self.play_start_time 
+        diff = play_end_time - self.play_start_time
         elapsed_time = int((diff.seconds * 1000) + (diff.microseconds / 1000))
 
         # TODO: send failed metric
