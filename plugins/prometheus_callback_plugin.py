@@ -1,9 +1,10 @@
+from __future__ import (absolute_import, division, print_function)
 from prometheus_client import CollectorRegistry, Gauge, push_to_gateway
 
 from ansible.plugins.callback import CallbackBase
 from ansible import constants as C
 
-from __future__ import (absolute_import, division, print_function)
+
 from __main__ import cli
 from datetime import datetime
 import os
@@ -12,6 +13,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
     Sends playbook metrics to a Prometheus push gateway.
     '''
+
 
 class CallbackModule(CallbackBase):
     '''
@@ -35,14 +37,13 @@ class CallbackModule(CallbackBase):
         self.registry = CollectorRegistry()
         self.play_start_time = datetime.now()
 
-
     def v2_runner_on_ok(self, result):
         print('Successful task: Sending to gateway')
-        
+
         play_end_time = datetime.now()
 
         elapsed_time = 0
-        diff = play_end_time - self.play_start_time 
+        diff = play_end_time - self.play_start_time
         elapsed_time = int((diff.seconds * 1000) + (diff.microseconds / 1000))
 
         # TODO: send success metric
@@ -51,7 +52,7 @@ class CallbackModule(CallbackBase):
 
     def v2_runner_on_failed(self, result, ignore_errors=False):
         print('Failed task: Sending to gateway')
-        
+
         play_end_time = datetime.now()
 
         elapsed_time = 0
@@ -59,7 +60,7 @@ class CallbackModule(CallbackBase):
         elapsed_time = int((diff.seconds * 1000) + (diff.microseconds / 1000))
 
         # TODO: send failed metric
-        
+
         pass
 
     def v2_playbook_on_stats(self, stats):
