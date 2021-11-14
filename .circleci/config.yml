@@ -7,11 +7,11 @@ orbs:
 
 jobs:
   - docker/hadolint:
-      dockerfiles: path/to/Dockerfile
+      dockerfiles: ansible-lint/Dockerfile
       executor-class: medium
       hadolint-tag: 2.2.0-debian
       ignore-rules: 'DL4005,DL3008'
-      trusted-registries: 'docker.io,my-company.com:5000'
+      trusted-registries: 'docker.io'
 
   markdownlint:
     docker:
