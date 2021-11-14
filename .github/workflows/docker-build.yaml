@@ -32,4 +32,4 @@ jobs:
         with:
           context: ansible-lint/.
           push: true
-          tags: user/app:latest
+          tags: timbuchinger/ansible-lint:latest
