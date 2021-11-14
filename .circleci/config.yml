@@ -1,9 +1,34 @@
 version: 2.1
 orbs:
   python: circleci/python@1.2
+  gitleaks: upenn-libraries/gitleaks@0.1.0
+  ruby: circleci/ruby@x.y
+  docker: circleci/docker@2.0.1
 
 jobs:
-  lint:
+  - docker/hadolint:
+      dockerfiles: path/to/Dockerfile
+      executor-class: medium
+      hadolint-tag: 2.2.0-debian
+      ignore-rules: 'DL4005,DL3008'
+      trusted-registries: 'docker.io,my-company.com:5000'
+
+  markdownlint:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - ruby/install:
+        version: '2.7'
+      - run:
+          name: Install Markdownlint
+          command: gem install mdl
+      - run:
+          name: Run Markdownlint
+          command: mld .
+
+  python-lint:
     docker:
       - image: cimg/python:3.8
     steps:
@@ -20,4 +45,7 @@ jobs:
 workflows:
   python:
     jobs:
-      - lint
+      - python-lint
+      - markdownlint
+      - docker/hadolint
+      - gitleaks/check_local
