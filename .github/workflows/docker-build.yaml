@@ -1,11 +1,11 @@
 name: docker-build
 
 on:
-  push:
-    paths:
-      - 'ansible-lint/Dockerfile'
-    branches:
-      - 'main'
+  # push:
+  #   paths:
+  #     - 'ansible-lint/Dockerfile'
+  #   branches:
+  #     - 'main'
   workflow_dispatch:
 
 jobs:

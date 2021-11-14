@@ -2,7 +2,8 @@
 
 ## Prometheus Callback Plugin
 
-The Prometheus Callback Plugin makes use of the Prometheus Pushgateway to send metrics from your Ansible runs to Prometheus.
+The Prometheus Callback Plugin makes use of the Prometheus Pushgateway to send
+metrics from your Ansible runs to Prometheus.
 
 Installing the Pushgateway is easy with the use of Helm:
 
@@ -12,4 +13,5 @@ helm repo update
 helm install [RELEASE_NAME] prometheus-community/prometheus-pushgateway
 ```
 
-See the [Prometheus-Pushgateway chart repo](https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-pushgateway) for more information.
+See the [Prometheus-Pushgateway chart repo](https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-pushgateway)
+for more information.
