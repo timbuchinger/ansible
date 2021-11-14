@@ -2,25 +2,28 @@ version: 2.1
 orbs:
   python: circleci/python@1.2
   gitleaks: upenn-libraries/gitleaks@0.1.0
-  ruby: circleci/ruby@x.y
+  ruby: circleci/ruby@1.2.0
   docker: circleci/docker@2.0.1
 
 jobs:
-  - docker/hadolint:
-      dockerfiles: ansible-lint/Dockerfile
-      executor-class: medium
-      hadolint-tag: 2.2.0-debian
-      ignore-rules: 'DL4005,DL3008'
-      trusted-registries: 'docker.io'
+  dockerlint:
+    docker:
+      - image: 'hadolint/hadolint:latest'
+    steps:
+      - docker/hadolint:
+          name: hadolint
+          dockerfiles: ansible-lint/Dockerfile
+          ignore-rules: 'DL4005,DL3008'
+          trusted-registries: 'docker.io'
 
   markdownlint:
     docker:
       - image: 'cimg/base:stable'
     steps:
-      - name: Checkout
-        uses: actions/checkout@master
+      - checkout
+        #uses: actions/checkout@master
       - ruby/install:
-        version: '2.7'
+          version: '2.7'
       - run:
           name: Install Markdownlint
           command: gem install mdl
